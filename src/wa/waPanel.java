@@ -15,12 +15,15 @@ import java.net.URL;
 import javax.swing.SwingConstants;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import ps.ParameterBase;
 
 import java.awt.BorderLayout;
 
 
-public class waGui extends JPanel {
+public class waPanel extends JPanel {
 
 	
 	JLabel lblTemperatur;
@@ -40,7 +43,7 @@ public class waGui extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public waGui() {
+	public waPanel() {
 		setLayout(null);
 		setPreferredSize(new Dimension(500,300));	
 		setVisible(true);
@@ -52,27 +55,27 @@ public class waGui extends JPanel {
 		add(lblIcon);
 		
 		lblTemperatur = new JLabel("18 C");
-		lblTemperatur.setFont(new Font("Tahoma", Font.BOLD, 48));
-		lblTemperatur.setBounds(85, 11, 255, 65);
+		lblTemperatur.setFont(new Font("Arial", Font.BOLD, 48));
+		lblTemperatur.setBounds(85, 11, 173, 65);
 		add(lblTemperatur);
 		
 		lblWeatherDescription = new JLabel("Weather description");
-		lblWeatherDescription.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblWeatherDescription.setFont(new Font("Arial", Font.BOLD, 20));
 		lblWeatherDescription.setBounds(85, 76, 101, 36);
 		add(lblWeatherDescription);
 		
 		lblMaxmintemp = new JLabel("Max_Min_Temp");
-		lblMaxmintemp.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblMaxmintemp.setBounds(85, 105, 192, 29);
+		lblMaxmintemp.setFont(new Font("Arial", Font.BOLD, 12));
+		lblMaxmintemp.setBounds(268, 30, 144, 29);
 		add(lblMaxmintemp);
 		
 		lblWeatherskydescription = new JLabel("WeatherSkydescription");
-		lblWeatherskydescription.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblWeatherskydescription.setFont(new Font("Arial", Font.BOLD, 20));
 		lblWeatherskydescription.setBounds(10, 134, 236, 36);
 		add(lblWeatherskydescription);
 		
 		lblWeatherskydescription_1 = new JLabel("WeatherSkydescription2");
-		lblWeatherskydescription_1.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblWeatherskydescription_1.setFont(new Font("Arial", Font.BOLD, 20));
 		lblWeatherskydescription_1.setBounds(10, 157, 236, 36);
 		add(lblWeatherskydescription_1);
 		
@@ -105,7 +108,77 @@ public class waGui extends JPanel {
 		vorschau6.setBounds(395, 204, 72, 85);
 		add(vorschau6);
 		
+		initwaPanel();
+		
 	}
+	
+	private static String HereAppID = "";
+	private static String HereAppCode = "";
+	
+	private static void readHereAppKeys() {
+		System.out.println(ParameterBase.getXmlPath());
+
+		HereAppID = ParameterBase.getParameterValue("DeveloperKey", "HereAppID");
+		HereAppCode = ParameterBase.getParameterValue("DeveloperKey", "HereAppCode");
+
+	}
+	
+	
+	private void initwaPanel()
+	{
+		
+		JSONObject json = new JSONObject();
+		try {
+
+			readHereAppKeys();
+
+			String weather = "";
+
+			weather = "https://weather.api.here.com/weather/1.0/report.json?product=observation&latitude=51.90693&longitude=8.37853&oneobservation=true&language=de&app_id="
+					+ HereAppID + "&app_code=" + HereAppCode;
+
+			json = JSONFrame.readJsonFromUrl(weather);
+			JSONObject observationObject = json.getJSONObject("observations");
+			JSONArray locationArray = observationObject.getJSONArray("location");
+			JSONObject tempObject = locationArray.getJSONObject(0);
+
+			JSONArray locationDetails = tempObject.getJSONArray("observation");
+			JSONObject locationObjectDetails = locationDetails.getJSONObject(0);
+			String pictureUrl = locationObjectDetails.getString("iconLink");
+			
+			
+			Image img = null;
+			try {
+				URL url = new URL(pictureUrl);
+				img = ImageIO.read(url);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			setCurrentTemperature(locationObjectDetails.getDouble("temperature"));
+			setMaxMinTemperature(locationObjectDetails.getDouble("highTemperature"), locationObjectDetails.getDouble("lowTemperature"));
+			setWeatherDescription(locationObjectDetails.getString("temperatureDesc"),locationObjectDetails.getString("skyDescription"),locationObjectDetails.getString("precipitationDesc"));
+			setWeatherIcon(img);
+		    		    
+			json = null;
+			
+			weather = "https://weather.api.here.com/weather/1.0/report.json?product=forecast_7days_simple&name=Guetersloh&app_id="+ HereAppID + "&app_code=" + HereAppCode;
+			json = JSONFrame.readJsonFromUrl(weather);
+			
+			setVorschau(json);
+						
+			json = null;
+
+		} catch (JSONException | IOException e) {
+
+			e.printStackTrace();
+		}
+
+		
+	}
+
+	
+	
 	
 	public void setVorschauTag(Vorschau vorschauPanel,String wochentag)
 	{		
@@ -261,7 +334,7 @@ public class waGui extends JPanel {
 	
 	public void setMaxMinTemperature(double maxTemperature, double minTemperature)
 	{
-		lblMaxmintemp.setText("(" + String.valueOf(maxTemperature) + "/ " + String.valueOf(minTemperature) + ")");
+		lblMaxmintemp.setText("<html><body>" + String.valueOf(maxTemperature) + "°C<br>"+ String.valueOf(minTemperature)+ "°C</body></html>");
 	}
 	
 	public void setWeatherIcon(Image weatherIcon)

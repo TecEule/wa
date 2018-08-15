@@ -3,6 +3,8 @@ package wa;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import org.json.JSONObject;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -26,11 +28,12 @@ public class Vorschau extends JPanel {
 		setVisible(true);
 		
 		lblNewLabel = new JLabel("Wochentag", JLabel.CENTER);
+		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 11));
 		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
 		add(lblNewLabel, BorderLayout.NORTH);
 		
 		lblNewLabel_2 = new JLabel("Temp", JLabel.CENTER);
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblNewLabel_2.setFont(new Font("Arial", Font.PLAIN, 11));
 		add(lblNewLabel_2, BorderLayout.SOUTH);
 
 		
@@ -38,6 +41,7 @@ public class Vorschau extends JPanel {
 		add(lblNewLabel_1, BorderLayout.CENTER);
 		
 	}
+	
 	
 	public void setVorschauTag(String wochentag)
 	{
