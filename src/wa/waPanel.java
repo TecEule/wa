@@ -21,6 +21,7 @@ import org.json.JSONObject;
 import ps.ParameterBase;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 
 
 public class waPanel extends JPanel {
@@ -40,10 +41,13 @@ public class waPanel extends JPanel {
 	Vorschau vorschau5;
 	Vorschau vorschau6;
 	
+	private static int panelBreite, panelHoehe;
+	
 	/**
 	 * Create the panel.
 	 */
 	public waPanel() {
+		setBackground(Color.BLACK);
 		setLayout(null);
 		setPreferredSize(new Dimension(500,300));	
 		setVisible(true);
@@ -55,26 +59,31 @@ public class waPanel extends JPanel {
 		add(lblIcon);
 		
 		lblTemperatur = new JLabel("18 C");
+		lblTemperatur.setForeground(Color.WHITE);
 		lblTemperatur.setFont(new Font("Arial", Font.BOLD, 48));
 		lblTemperatur.setBounds(85, 11, 173, 65);
 		add(lblTemperatur);
 		
 		lblWeatherDescription = new JLabel("Weather description");
+		lblWeatherDescription.setForeground(Color.WHITE);
 		lblWeatherDescription.setFont(new Font("Arial", Font.BOLD, 20));
 		lblWeatherDescription.setBounds(85, 76, 101, 36);
 		add(lblWeatherDescription);
 		
 		lblMaxmintemp = new JLabel("Max_Min_Temp");
+		lblMaxmintemp.setForeground(Color.WHITE);
 		lblMaxmintemp.setFont(new Font("Arial", Font.BOLD, 12));
 		lblMaxmintemp.setBounds(268, 30, 144, 29);
 		add(lblMaxmintemp);
 		
 		lblWeatherskydescription = new JLabel("WeatherSkydescription");
+		lblWeatherskydescription.setForeground(Color.WHITE);
 		lblWeatherskydescription.setFont(new Font("Arial", Font.BOLD, 20));
 		lblWeatherskydescription.setBounds(10, 134, 236, 36);
 		add(lblWeatherskydescription);
 		
 		lblWeatherskydescription_1 = new JLabel("WeatherSkydescription2");
+		lblWeatherskydescription_1.setForeground(Color.WHITE);
 		lblWeatherskydescription_1.setFont(new Font("Arial", Font.BOLD, 20));
 		lblWeatherskydescription_1.setBounds(10, 157, 236, 36);
 		add(lblWeatherskydescription_1);
@@ -116,13 +125,20 @@ public class waPanel extends JPanel {
 	private static String HereAppCode = "";
 	
 	private static void readHereAppKeys() {
-		System.out.println(ParameterBase.getXmlPath());
-
 		HereAppID = ParameterBase.getParameterValue("DeveloperKey", "HereAppID");
 		HereAppCode = ParameterBase.getParameterValue("DeveloperKey", "HereAppCode");
 
 	}
 	
+	public int getBreite()
+	{
+		return this.getWidth();
+	}
+	
+	public int getHoehe()
+	{
+		return this.getHeight();
+	}
 	
 	private void initwaPanel()
 	{

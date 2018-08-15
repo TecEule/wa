@@ -12,6 +12,7 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import java.awt.Color;
 
 public class Vorschau extends JPanel {
 
@@ -23,16 +24,19 @@ public class Vorschau extends JPanel {
 	 * Create the panel.
 	 */
 	public Vorschau() {
+		setBackground(Color.BLACK);
 		setLayout(new BorderLayout(0, 0));
 		setPreferredSize(new Dimension(130, 90));
 		setVisible(true);
 		
 		lblNewLabel = new JLabel("Wochentag", JLabel.CENTER);
+		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 11));
 		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
 		add(lblNewLabel, BorderLayout.NORTH);
 		
 		lblNewLabel_2 = new JLabel("Temp", JLabel.CENTER);
+		lblNewLabel_2.setForeground(Color.WHITE);
 		lblNewLabel_2.setFont(new Font("Arial", Font.PLAIN, 11));
 		add(lblNewLabel_2, BorderLayout.SOUTH);
 
