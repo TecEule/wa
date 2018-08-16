@@ -53,6 +53,7 @@ public class waPanel extends JPanel {
 		setVisible(true);
 		
 	
+	
 		lblIcon = new JLabel("WeatherIcon");
 		lblIcon.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblIcon.setBounds(10, 11, 65, 65);
@@ -67,7 +68,7 @@ public class waPanel extends JPanel {
 		lblWeatherDescription = new JLabel("Weather description");
 		lblWeatherDescription.setForeground(Color.WHITE);
 		lblWeatherDescription.setFont(new Font("Arial", Font.BOLD, 20));
-		lblWeatherDescription.setBounds(85, 76, 101, 36);
+		lblWeatherDescription.setBounds(85, 76, 228, 36);
 		add(lblWeatherDescription);
 		
 		lblMaxmintemp = new JLabel("Max_Min_Temp");
@@ -79,13 +80,13 @@ public class waPanel extends JPanel {
 		lblWeatherskydescription = new JLabel("WeatherSkydescription");
 		lblWeatherskydescription.setForeground(Color.WHITE);
 		lblWeatherskydescription.setFont(new Font("Arial", Font.BOLD, 20));
-		lblWeatherskydescription.setBounds(10, 134, 236, 36);
+		lblWeatherskydescription.setBounds(10, 134, 457, 36);
 		add(lblWeatherskydescription);
 		
 		lblWeatherskydescription_1 = new JLabel("WeatherSkydescription2");
 		lblWeatherskydescription_1.setForeground(Color.WHITE);
 		lblWeatherskydescription_1.setFont(new Font("Arial", Font.BOLD, 20));
-		lblWeatherskydescription_1.setBounds(10, 157, 236, 36);
+		lblWeatherskydescription_1.setBounds(10, 157, 457, 36);
 		add(lblWeatherskydescription_1);
 		
 //		panel = new JPanel();
@@ -140,7 +141,7 @@ public class waPanel extends JPanel {
 		return this.getHeight();
 	}
 	
-	private void initwaPanel()
+	public void initwaPanel()
 	{
 		
 		JSONObject json = new JSONObject();
@@ -212,7 +213,7 @@ public class waPanel extends JPanel {
 	}
 	
 	
-	public void setVorschau(JSONObject json)
+	private void setVorschau(JSONObject json)
 	{
 		if (json != null)
 		{
@@ -366,4 +367,6 @@ public class waPanel extends JPanel {
 		lblWeatherskydescription.setText(skyDescription);
 		lblWeatherskydescription_1.setText(desc2);
 	}
+
+
 }
